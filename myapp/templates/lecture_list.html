@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecture List</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #343a40;
+        }
+        /* Scheduled Lectures Styles */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        li::before {
+            content: "\2022";
+            color: #007bff;
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .empty-state {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lecture List</h1>
+        <h2>Scheduled Lectures</h2>
+        <ul>
+            {% for scheduled_lecture in scheduled_lectures %}
+                <li>{{ scheduled_lecture.course.name }} - {{ scheduled_lecture.date }}: {{ scheduled_lecture.description }}</li>
+            {% empty %}
+                <li class="empty-state">No scheduled lectures</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

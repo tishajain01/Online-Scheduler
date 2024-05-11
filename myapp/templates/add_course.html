@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Course</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #343a40;
+        }
+        /* Course Form Styles */
+        form {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        form input[type="text"],
+        form input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        form input[type="description"]{
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        form button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        /* Course Card Styles */
+        .course-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer; /* Add cursor pointer to indicate clickable */
+        }
+        .course-card img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .course-card h2 {
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+        .course-card p {
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #6c757d;
+        }
+        .course-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        /* Empty State Styles */
+        .empty-state {
+            text-align: center;
+            color: #6c757d;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Course</h1>
+        <!-- Course Form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Course</button>
+        </form>
+
+        <!-- Display all courses -->
+        <h2>All Courses</h2>
+        <div class="course-list">
+            {% for course in courses %}
+                <a href="{% url 'schedule_lecture' course.id %}">
+                    <div class="course-card">
+                        <h2>{{ course.name }}</h2>
+                        <p><strong>Level:</strong> {{ course.level }}</p>
+                        <p>{{ course.description }}</p>
+                    </div>
+                </a>
+            {% empty %}
+                <p class="empty-state">No courses available</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
